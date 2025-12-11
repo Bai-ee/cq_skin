@@ -171,14 +171,24 @@ const StatCard = ({ icon: Icon, label, value, sub, gradient }) => (
   </div>
 );
 
-const Section = ({ id, title, icon: Icon, children, className = '' }) => (
-  <section id={id} className={`py-16 ${className}`}>
-    <div className="flex items-center gap-4 mb-8">
-      <div className="p-3 rounded-xl bg-gradient-to-br from-quest-primary/20 to-quest-secondary/20 border border-quest-primary/30">
-        <Icon className="w-6 h-6 text-quest-primary" />
+const Section = ({ id, title, icon: Icon, image, titleStyle, children, className = '', mobileVertical = false, hideHeader = false }) => (
+  <section id={id} className={`${mobileVertical ? 'pb-16 pt-0 md:py-16' : 'py-16'} ${className}`}>
+    {!hideHeader && (image || Icon || title) && (
+      <div className={`flex items-center gap-4 ${mobileVertical ? 'mb-4 md:mb-8 flex-col md:flex-row w-1/2 mx-auto md:w-auto md:mx-0' : 'mb-8'}`}>
+        {image && mobileVertical ? (
+          <img src={image} alt={title} className="w-40 h-auto md:w-6 md:h-6" />
+        ) : (image || Icon) ? (
+          <div className="p-3 rounded-xl bg-gradient-to-br from-quest-primary/20 to-quest-secondary/20 border border-quest-primary/30">
+            {image ? (
+              <img src={image} alt={title} className="w-6 h-6" />
+            ) : Icon ? (
+              <Icon className="w-6 h-6 text-quest-primary" />
+            ) : null}
+          </div>
+        ) : null}
+        {title && <h2 className={`text-3xl font-bold text-white ${mobileVertical ? 'text-center' : ''}`} style={titleStyle}>{title}</h2>}
       </div>
-      <h2 className="text-3xl font-bold text-white">{title}</h2>
-    </div>
+    )}
     {children}
   </section>
 );
@@ -373,73 +383,24 @@ function App() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,184,74,0.2) 100%)', border: '1px solid rgba(255,215,0,0.5)' }}>
               <span className="font-medium text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", color: '#FFD700' }}>Turbo Charging Our Ecosystem</span>
             </div>
-            <p id="overview-description" className="text-xl text-gray-400 max-w-3xl mx-auto">
-              A 4X Strategy Game with a revolutionary fair-launch TGE via ORE Mining Protocol. 
-              No presales. No VC dumps. Just fair distribution through gameplay and mining.
+            <p id="overview-description" className="text-xl max-w-3xl mx-auto" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", background: 'linear-gradient(135deg, #FFD700 0%, #FFB84A 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              A new technique featuring 3 interconnected systems creating perpetual value for all participants.
             </p>
           </div>
 
-          {/* Three Pillars */}
-          <div id="three-pillars" className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-gradient-to-br from-quest-primary/20 to-quest-primary/5 border border-quest-primary/50 rounded-2xl p-6 glow">
-              <div className="w-14 h-14 rounded-xl bg-quest-primary/20 flex items-center justify-center mb-4">
-                <Hammer className="w-7 h-7 text-quest-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">SOV Mining (TGE)</h3>
-              <p className="text-gray-400 text-sm mb-3">Our TGE method via ORE Protocol. Fair token distribution + perpetual revenue.</p>
-              <div className="text-quest-primary font-semibold text-sm">The Launch Mechanism →</div>
-            </div>
-            <div className="bg-gradient-to-br from-quest-secondary/20 to-quest-secondary/5 border border-quest-secondary/50 rounded-2xl p-6 glow-purple">
-              <div className="w-14 h-14 rounded-xl bg-quest-secondary/20 flex items-center justify-center mb-4">
-                <Gamepad2 className="w-7 h-7 text-quest-secondary" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">4X Strategy Game</h3>
-              <p className="text-gray-400 text-sm mb-3">Explore, Expand, Exploit, Exterminate. Real gameplay with real rewards.</p>
-              <div className="text-quest-secondary font-semibold text-sm">The Game →</div>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 border border-yellow-500/50 rounded-2xl p-6">
-              <div className="w-14 h-14 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-4">
-                <Coins className="w-7 h-7 text-yellow-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">$QUEST Token</h3>
-              <p className="text-gray-400 text-sm mb-3">59% burned pre-TGE. Utility across mining, staking, and gameplay.</p>
-              <div className="text-yellow-400 font-semibold text-sm">The Token →</div>
-            </div>
-          </div>
-
-          {/* Key Stats */}
-          <div id="key-stats" className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {keyMetrics.map((metric, i) => (
-              <StatCard 
-                key={i}
-                icon={[Coins, Flame, Users, Lock][i]}
-                label={metric.label}
-                value={metric.value}
-                sub={metric.sub}
-                gradient={i === 0}
-              />
-            ))}
-          </div>
-        </div>
-      </header>
-
-      <main className="px-6">
-        <div className="max-w-7xl mx-auto">
-
           {/* ECOSYSTEM OVERVIEW */}
-          <Section id="ecosystem" title="The Critters Quest Ecosystem" icon={Layers}>
-            <p className="text-gray-400 text-lg mb-8">Three interconnected systems that create sustainable value for all participants.</p>
+          <Section id="ecosystem" title="" hideHeader={true} className="!pt-0">
             
             {/* Ecosystem Flow Diagram */}
-            <div className="bg-quest-card border border-quest-border rounded-2xl p-8 mb-8">
+            <div className="ecosystem-border-animate rounded-2xl p-8 mb-8" style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(15,15,35,0.95) 50%, rgba(255,184,74,0.1) 100%)' }}>
               <div className="grid md:grid-cols-3 gap-8 items-center">
                 <div className="text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-quest-primary/20 flex items-center justify-center mx-auto mb-4">
-                    <Hammer className="w-10 h-10 text-quest-primary" />
+                  <div className="w-20 h-20 rounded-2xl bg-black flex items-center justify-center mx-auto mb-4 ore-icon-glow">
+                    <img src="/assets_cqTGE/ore.png" alt="ORE" className="w-10 h-10" />
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-2">SOV Mining</h4>
-                  <p className="text-gray-400 text-sm">TGE via ORE Protocol</p>
-                  <div className="mt-3 space-y-1 text-xs text-gray-500">
+                  <h4 className="font-bold text-lg mb-2" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", color: '#FFD700' }}>SOV Mining</h4>
+                  <p className="text-gray-400 text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>TGE via ORE Protocol</p>
+                  <div className="mt-3 space-y-1 text-xs text-gray-500" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
                     <div>• Fair token distribution</div>
                     <div>• Earn SOL + QUEST</div>
                     <div>• 7% buyback burns</div>
@@ -449,19 +410,19 @@ function App() {
                 <div className="flex flex-col items-center gap-4">
                   <div className="flex items-center gap-2">
                     <ArrowRight className="w-5 h-5 text-quest-primary" />
-                    <span className="text-gray-500 text-xs">QUEST flows</span>
+                    <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>QUEST flows</span>
                     <ArrowRight className="w-5 h-5 text-quest-primary" />
                   </div>
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-quest-primary to-quest-secondary flex items-center justify-center">
-                    <Gem className="w-8 h-8 text-white" />
+                  <div className="flex items-center justify-center">
+                    <img src="/assets_cqTGE/CoinStacked.png" alt="QUEST Token" className="w-[11.2rem] h-[11.2rem] object-contain" />
                   </div>
                   <div className="text-center">
-                    <div className="text-white font-bold">$QUEST</div>
-                    <div className="text-gray-500 text-xs">Utility Token</div>
+                    <div className="text-white font-bold" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>$QUEST</div>
+                    <div className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>Utility Token</div>
                   </div>
                   <div className="flex items-center gap-2">
                     <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
-                    <span className="text-gray-500 text-xs">20% to treasury</span>
+                    <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>20% to treasury</span>
                     <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
                   </div>
                 </div>
@@ -470,9 +431,9 @@ function App() {
                   <div className="w-20 h-20 rounded-2xl bg-quest-secondary/20 flex items-center justify-center mx-auto mb-4">
                     <Gamepad2 className="w-10 h-10 text-quest-secondary" />
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-2">4X Game</h4>
-                  <p className="text-gray-400 text-sm">Play & Earn</p>
-                  <div className="mt-3 space-y-1 text-xs text-gray-500">
+                  <h4 className="text-white font-bold text-lg mb-2" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>4X Game</h4>
+                  <p className="text-gray-400 text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>Play & Earn</p>
+                  <div className="mt-3 space-y-1 text-xs text-gray-500" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
                     <div>• Spend QUEST in-game</div>
                     <div>• Earn through gameplay</div>
                     <div>• 20% feeds SOV treasury</div>
@@ -530,6 +491,54 @@ function App() {
               </div>
             </div>
           </Section>
+
+          {/* Three Pillars */}
+          <div id="three-pillars" className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-gradient-to-br from-quest-primary/20 to-quest-primary/5 border border-quest-primary/50 rounded-2xl p-6 glow">
+              <div className="w-14 h-14 rounded-xl bg-quest-primary/20 flex items-center justify-center mb-4">
+                <Hammer className="w-7 h-7 text-quest-primary" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">SOV Mining (TGE)</h3>
+              <p className="text-gray-400 text-sm mb-3">Our TGE method via ORE Protocol. Fair token distribution + perpetual revenue.</p>
+              <div className="text-quest-primary font-semibold text-sm">The Launch Mechanism →</div>
+            </div>
+            <div className="bg-gradient-to-br from-quest-secondary/20 to-quest-secondary/5 border border-quest-secondary/50 rounded-2xl p-6 glow-purple">
+              <div className="w-14 h-14 rounded-xl bg-quest-secondary/20 flex items-center justify-center mb-4">
+                <Gamepad2 className="w-7 h-7 text-quest-secondary" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">4X Strategy Game</h3>
+              <p className="text-gray-400 text-sm mb-3">Explore, Expand, Exploit, Exterminate. Real gameplay with real rewards.</p>
+              <div className="text-quest-secondary font-semibold text-sm">The Game →</div>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 border border-yellow-500/50 rounded-2xl p-6">
+              <div className="w-14 h-14 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-4">
+                <Coins className="w-7 h-7 text-yellow-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">$QUEST Token</h3>
+              <p className="text-gray-400 text-sm mb-3">59% burned pre-TGE. Utility across mining, staking, and gameplay.</p>
+              <div className="text-yellow-400 font-semibold text-sm">The Token →</div>
+            </div>
+          </div>
+
+          {/* Key Stats */}
+          <div id="key-stats" className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {keyMetrics.map((metric, i) => (
+              <StatCard 
+                key={i}
+                icon={[Coins, Flame, Users, Lock][i]}
+                label={metric.label}
+                value={metric.value}
+                sub={metric.sub}
+                gradient={i === 0}
+              />
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <main className="px-6">
+        <div className="max-w-7xl mx-auto">
+
           
           {/* TGE & SOV MINING - THE LAUNCH MECHANISM */}
           <Section id="tge" title="TGE via SOV Mining (ORE Protocol)" icon={Hammer}>

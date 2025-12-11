@@ -63,6 +63,106 @@
       @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(20, 241, 149, 0.3); } 50% { box-shadow: 0 0 40px rgba(20, 241, 149, 0.5); } }
       .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
       
+      /* Gold glow pulsating animation */
+      @keyframes gold-pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2); }
+        50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.7), 0 0 60px rgba(255, 215, 0, 0.4); }
+      }
+      .gold-pulse-glow { animation: gold-pulse-glow 2.5s ease-in-out infinite; }
+      
+      /* Tron-style light trail border animation - dual color */
+      @keyframes rotate-border {
+        0% { --angle: 0deg; }
+        100% { --angle: 360deg; }
+      }
+      @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+      }
+      .ecosystem-border-animate {
+        position: relative;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 215, 0, 0.1);
+        overflow: visible;
+      }
+      /* Gold trail - traces left/top side (ORE side) */
+      .ecosystem-border-animate::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        padding: 2px;
+        background: conic-gradient(
+          from var(--angle),
+          /* Gold trail at 0% position */
+          #FFD700 0%,
+          #FFD700 2%,
+          rgba(255, 215, 0, 0.6) 4%,
+          rgba(255, 215, 0, 0.3) 6%,
+          rgba(255, 215, 0, 0.1) 10%,
+          transparent 15%,
+          /* Purple trail at 50% position (opposite side) */
+          transparent 35%,
+          rgba(153, 69, 255, 0.1) 40%,
+          rgba(153, 69, 255, 0.3) 44%,
+          rgba(153, 69, 255, 0.6) 46%,
+          #9945FF 48%,
+          #9945FF 52%,
+          rgba(153, 69, 255, 0.6) 54%,
+          rgba(153, 69, 255, 0.3) 56%,
+          rgba(153, 69, 255, 0.1) 60%,
+          transparent 65%,
+          transparent 85%,
+          rgba(255, 215, 0, 0.1) 90%,
+          rgba(255, 215, 0, 0.3) 94%,
+          rgba(255, 215, 0, 0.6) 96%,
+          #FFD700 98%,
+          #FFD700 100%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: rotate-border 6s linear infinite;
+        pointer-events: none;
+      }
+      /* Glow effect - dual color */
+      .ecosystem-border-animate::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: 1rem;
+        padding: 3px;
+        background: conic-gradient(
+          from var(--angle),
+          rgba(255, 215, 0, 0.8) 0%,
+          rgba(255, 215, 0, 0.4) 5%,
+          transparent 15%,
+          transparent 35%,
+          rgba(153, 69, 255, 0.4) 45%,
+          rgba(153, 69, 255, 0.8) 50%,
+          rgba(153, 69, 255, 0.4) 55%,
+          transparent 65%,
+          transparent 85%,
+          rgba(255, 215, 0, 0.4) 95%,
+          rgba(255, 215, 0, 0.8) 100%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        filter: blur(8px);
+        animation: rotate-border 6s linear infinite;
+        pointer-events: none;
+      }
+      
+      /* Gold outline for ore icon */
+      .ore-icon-glow {
+        border: 2px solid #FFD700;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.1);
+      }
+      
       /* Hero Animation GPU hints */
       #cq-hero * { 
         -webkit-font-smoothing: antialiased;
