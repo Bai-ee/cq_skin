@@ -349,7 +349,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-quest-darker text-white font-sans">
-      <Nav activeSection={activeSection} showNav={showNav} />
+      {/* <Nav activeSection={activeSection} showNav={showNav} /> */}
       
       {/* Theatrical Hero Section */}
       <HeroSection />
@@ -368,11 +368,10 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
-              <span className="text-white">$QUEST</span>
+              <span style={{ background: 'linear-gradient(135deg, #FFD700 0%, #FFB84A 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>$QUEST</span>
             </h1>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2) 0%, rgba(255,215,0,0.2) 100%)', border: '1px solid rgba(255,159,67,0.5)' }}>
-              <Zap className="w-4 h-4" style={{ color: '#FF6B35' }} />
-              <span className="font-medium text-sm" style={{ background: 'linear-gradient(135deg, #FF6B35 0%, #FFD700 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Turbo Charging the Ecosystem</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,184,74,0.2) 100%)', border: '1px solid rgba(255,215,0,0.5)' }}>
+              <span className="font-medium text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", color: '#FFD700' }}>Turbo Charging Our Ecosystem</span>
             </div>
             <p id="overview-description" className="text-xl text-gray-400 max-w-3xl mx-auto">
               A 4X Strategy Game with a revolutionary fair-launch TGE via ORE Mining Protocol. 

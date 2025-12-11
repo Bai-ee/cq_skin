@@ -8,7 +8,7 @@ This is a React-based tokenomics website for Critters Quest ($QUEST). The site d
 ### Theatrical Hero Section (Latest Session)
 Built a **theatrical, mobile-first splash hero sequence** using **GSAP 3 + ScrollTrigger**. Features include:
 
-#### Animation Sequence
+#### Angation Sequence
 1. Stage overlay fades from black
 2. Clouds fade in with parallax
 3. Background hills rise into view

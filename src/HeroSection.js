@@ -79,18 +79,18 @@ const HeroSection = () => {
 
     // Animation sequence - Token rises quickly, Phase 2 starts at 0.5s (0.5s overlap)
     mainTl
-      // PHASE 1: Token tossed up with gravity effect (faster, no pause)
-      // Fast rise, slows as it reaches apex (overshoots), then falls into place
+      // PHASE 1: Token tossed up with gravity effect (smooth, no dramatic pause)
+      // Fast rise, smooth transition, then falls into place
       .to('#cq-coin', {
         y: -40,  // Overshoot above final position
-        duration: 0.7,
-        ease: 'power3.out'  // Quick start, slow at apex
+        duration: 0.6,
+        ease: 'power2.out'  // Less dramatic slowdown at apex
       }, 0)
       .to('#cq-coin', {
         y: 0,  // Fall into final position
-        duration: 0.3,
+        duration: 0.4,
         ease: 'power2.in'  // Accelerate down like gravity
-      }, 0.7)
+      }, 0.5)  // Start fall earlier for smoother transition
       
       // PHASE 2: Starts before token lands (at 0.5s) for overlap
       
@@ -403,7 +403,7 @@ const HeroSection = () => {
       />
 
       {/* Clouds Layer */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 7 }}>
         <img 
           src="/assets_cqTGE/cloud1.png" 
           alt="" 
@@ -450,7 +450,7 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Sky Forefront - Behind minables and hero content */}
+      {/* Sky Forefront - Behind clouds, behind minables and hero content */}
       <div 
         id="sky-forefront"
         className="absolute left-0 right-0 overflow-visible"
@@ -459,7 +459,7 @@ const HeroSection = () => {
           height: 'clamp(250px, 50vh, 500px)',
           width: '100%',
           willChange: 'transform, opacity',
-          zIndex: 8
+          zIndex: 5
         }}
       >
         <img 
@@ -549,7 +549,7 @@ const HeroSection = () => {
           className="relative"
           style={{ 
             width: 'clamp(180px, 35vw, 330px)',
-            marginBottom: 'clamp(6px, 1vh, 15px)',
+            marginBottom: '0',
             willChange: 'transform, opacity'
           }}
         >
@@ -566,6 +566,8 @@ const HeroSection = () => {
           className="relative"
           style={{ 
             width: 'clamp(100px, 19vw, 180px)',
+            marginTop: '0',
+            marginBottom: '0',
             willChange: 'transform, opacity'
           }}
         >
@@ -579,8 +581,8 @@ const HeroSection = () => {
         {/* Pre-Mine Label - capped font size */}
         <div 
           id="pre-mine-label"
-          className="mt-2 md:mt-3"
-          style={{ willChange: 'transform, opacity' }}
+          className="mt-0"
+          style={{ willChange: 'transform, opacity', marginTop: '0', marginBottom: '0' }}
         >
           <h2 
             className="text-black font-bold tracking-wide"
@@ -588,7 +590,9 @@ const HeroSection = () => {
               fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
               fontSize: 'clamp(1.8rem, 5vw, 3.2rem)',
               color: '#000000',
-              letterSpacing: '0.02em'
+              letterSpacing: '0.02em',
+              margin: '0',
+              padding: '0'
             }}
           >
             PRE-MINE
@@ -598,8 +602,8 @@ const HeroSection = () => {
         {/* Countdown Timer - capped font size */}
         <div 
           id="countdown"
-          className="mt-1"
-          style={{ willChange: 'transform, opacity' }}
+          className="mt-0"
+          style={{ willChange: 'transform, opacity', marginTop: '0', marginBottom: '0' }}
         >
           <div 
             className="flex items-center justify-center"
@@ -624,7 +628,7 @@ const HeroSection = () => {
           </div>
           {timeLeft.days > 0 && (
             <div className="text-center text-xs md:text-sm text-gray-800 font-medium" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0 }}>
-              {timeLeft.days} Days · {timeLeft.hours}h · {timeLeft.minutes}m · {timeLeft.seconds}s
+              Lorem Ipsum
             </div>
           )}
         </div>
@@ -684,26 +688,35 @@ const HeroSection = () => {
           #cq-logo {
             width: 140px !important;
             margin-bottom: 0 !important;
+            margin-top: 0 !important;
           }
           
           #cq-coin {
             width: 70px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label {
             margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label h2 {
             font-size: 1.1rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #countdown {
             margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #countdown > div:first-child {
             font-size: 0.9rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #roadster {
@@ -1025,22 +1038,41 @@ const HeroSection = () => {
         @media (min-width: 401px) and (max-width: 480px) {
           #hero-centerpiece {
             padding-top: 40px !important;
+            gap: 0 !important;
           }
           
           #cq-logo {
             width: 210px !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
           }
           
           #cq-coin {
             width: 105px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+          }
+          
+          #pre-mine-label {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label h2 {
             font-size: 1.65rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          
+          #countdown {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #countdown > div:first-child {
             font-size: 1.35rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
         }
         
@@ -1103,27 +1135,36 @@ const HeroSection = () => {
           
           #cq-logo {
             width: 155px !important;
-            margin-bottom: 2px !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
           }
           
           #cq-coin {
             width: 60px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label {
-            margin-top: 2px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label h2 {
             font-size: 1.4rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #countdown {
-            margin-top: 1px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #countdown > div:first-child {
             font-size: 1.1rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #roadster {
@@ -1134,33 +1175,42 @@ const HeroSection = () => {
         /* Galaxy Z Fold 5 / Narrow tall device (340-360px width) */
         @media (min-width: 340px) and (max-width: 360px) {
           #hero-centerpiece {
-            padding-top: 50px !important; /* pushed down */
+            padding-top: 50px !important;
             gap: 0 !important;
           }
           
           #cq-logo {
             width: 200px !important; /* enlarged */
-            margin-bottom: 4px !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
           }
           
           #cq-coin {
             width: 90px !important; /* enlarged */
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label {
-            margin-top: 4px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #pre-mine-label h2 {
             font-size: 1.8rem !important; /* enlarged */
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #countdown {
-            margin-top: 2px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
           }
           
           #countdown > div:first-child {
             font-size: 1.4rem !important; /* enlarged */
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           #minables {
