@@ -572,7 +572,7 @@ const HeroSection = () => {
           }}
         >
           <img 
-            src="/assets_cqTGE/Coin.svg" 
+            src="/assets_cqTGE/Coin.png" 
             alt="QUEST Token" 
             className="w-full h-auto"
           />
@@ -1175,7 +1175,7 @@ const HeroSection = () => {
         /* Galaxy Z Fold 5 / Narrow tall device (340-360px width) */
         @media (min-width: 340px) and (max-width: 360px) {
           #hero-centerpiece {
-            padding-top: 50px !important;
+            padding-top: 10px !important; /* reduced from 50px */
             gap: 0 !important;
           }
           
