@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f0f23" />
+    <meta name="description" content="Critters Quest $QUEST Tokenomics - Complete Token Distribution & Economics Overview" />
+    <title>Critters Quest $QUEST Tokenomics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP 3 + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              quest: {
+                primary: '#14F195',
+                secondary: '#9945FF',
+                dark: '#0f0f23',
+                darker: '#080816',
+                card: '#1a1a2e',
+                border: '#2a2a4a'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      * { scrollbar-width: thin; scrollbar-color: #14F195 #1a1a2e; }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #1a1a2e; }
+      ::-webkit-scrollbar-thumb { background: #14F195; border-radius: 4px; }
+      .gradient-text { background: linear-gradient(135deg, #14F195 0%, #9945FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .glow { box-shadow: 0 0 40px rgba(20, 241, 149, 0.15); }
+      .glow-purple { box-shadow: 0 0 40px rgba(153, 69, 255, 0.15); }
+      @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(20, 241, 149, 0.3); } 50% { box-shadow: 0 0 40px rgba(20, 241, 149, 0.5); } }
+      .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+      
+      /* Hero Animation GPU hints */
+      #cq-hero * { 
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      #cq-hero img,
+      #cq-hero .cloud-layer,
+      #roadster,
+      #cq-coin,
+      #hero-centerpiece {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+      
+      /* Coin 3D effect */
+      #cq-coin {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      
+      /* Smooth transitions for nav */
+      nav {
+        will-change: transform, opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
