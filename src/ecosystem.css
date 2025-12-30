@@ -1,0 +1,277 @@
+/* Ecosystem layout adjustments */
+#ecosystem-flow {
+  min-height: 800px;
+}
+@media (min-width: 768px) {
+  #ecosystem-flow {
+    min-height: 600px;
+  }
+}
+
+/* Layering helpers */
+.ecosystem-bg-aurora,
+.ecosystem-particles {
+  z-index: 1;
+}
+#ecosystem-arrows {
+  z-index: 5;
+}
+.ecosystem-content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure mascots stay inside cards on mobile */
+@media (max-width: 767px) {
+  .ecosystem-card img {
+    max-width: 56px;
+    max-height: 56px;
+  }
+}
+/* Ecosystem Infographic CSS Animations */
+
+/* Mascot float animation */
+@keyframes mascot-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.mascot-float {
+  animation: mascot-float 4s ease-in-out infinite;
+}
+
+/* Token halo pulse animation */
+@keyframes token-halo-pulse {
+  0%, 100% {
+    transform: scale(0.96);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.95;
+  }
+}
+
+.token-halo {
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.28) 0%, transparent 70%);
+  filter: blur(8px);
+  animation: token-halo-pulse 3s ease-in-out infinite;
+}
+
+/* Token bob animation */
+@keyframes token-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+#quest-token {
+  animation: token-bob 2.5s ease-in-out infinite;
+}
+
+/* Arrow energy flow animation */
+@keyframes arrow-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+.ecosystem-arrow {
+  animation: arrow-flow 3s linear infinite;
+}
+
+/* Animated border for ecosystem container */
+@keyframes border-animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.ecosystem-border-animate {
+  position: relative;
+  background: linear-gradient(135deg, rgba(12,12,28,0.98) 0%, rgba(10,12,24,0.99) 50%, rgba(14,20,28,0.98) 100%);
+}
+
+.ecosystem-border-animate::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 1rem;
+  padding: 2px;
+  background: linear-gradient(90deg,
+    #FFD700 0%,
+    #1ea495 25%,
+    #FFD700 50%,
+    #1ea495 75%,
+    #FFD700 100%
+  );
+  background-size: 400% 400%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: border-animate 4s ease-in-out infinite;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* Background aurora effect */
+.ecosystem-bg-aurora {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background: radial-gradient(
+    ellipse at 20% 80%,
+    rgba(153, 69, 255, 0.3) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    ellipse at 80% 20%,
+    rgba(0, 206, 209, 0.3) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    ellipse at 40% 40%,
+    rgba(255, 215, 0, 0.1) 0%,
+    transparent 50%
+  );
+  filter: blur(40px);
+  z-index: 1;
+}
+
+/* Floating particles */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+.ecosystem-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.ecosystem-particles span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FFD700;
+  animation: particle-float 4s ease-in-out infinite;
+}
+
+.ecosystem-particles span.purple {
+  background: #9945FF;
+}
+
+.ecosystem-particles span.teal {
+  background: #00CED1;
+}
+
+/* Card styles */
+.ecosystem-card {
+  background: linear-gradient(145deg, rgba(22,22,42,0.95), rgba(12,12,28,0.95));
+  position: relative;
+  min-height: 120px;
+}
+
+.ecosystem-card.card-purple {
+  border: 2px solid rgba(153, 69, 255, 0.55);
+}
+
+.ecosystem-card.card-teal {
+  border: 2px solid rgba(0, 206, 209, 0.55);
+}
+
+.ecosystem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(var(--card-color-rgb), 0.3);
+}
+
+/* Benefit cards */
+.ecosystem-benefit-card {
+  transition: all 0.3s ease;
+}
+
+.ecosystem-benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mascot-float,
+  #quest-token,
+  .ecosystem-arrow,
+  .ecosystem-particles span,
+  .token-halo {
+    animation: none;
+  }
+
+  .ecosystem-border-animate::before {
+    animation: none;
+    opacity: 1;
+  }
+
+  .ecosystem-card:hover,
+  .ecosystem-benefit-card:hover {
+    transform: none;
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+  .ecosystem-border-animate {
+    padding: 1rem;
+  }
+
+  #quest-token {
+    animation-duration: 3s;
+  }
+
+  .ecosystem-card {
+    min-height: auto;
+  }
+  
+  /* Move mascots and icons closer to text on mobile */
+  .ecosystem-mascot-left {
+    left: 8px !important;
+  }
+  
+  .ecosystem-mascot-right {
+    right: 8px !important;
+  }
+  
+  .ecosystem-icon-left {
+    left: 8px !important;
+  }
+  
+  .ecosystem-icon-right {
+    right: 8px !important;
+  }
+}

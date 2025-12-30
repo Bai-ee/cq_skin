@@ -102,16 +102,16 @@
           rgba(255, 215, 0, 0.3) 6%,
           rgba(255, 215, 0, 0.1) 10%,
           transparent 15%,
-          /* Purple trail at 50% position (opposite side) */
+          /* Teal trail at 50% position (opposite side) */
           transparent 35%,
-          rgba(153, 69, 255, 0.1) 40%,
-          rgba(153, 69, 255, 0.3) 44%,
-          rgba(153, 69, 255, 0.6) 46%,
-          #9945FF 48%,
-          #9945FF 52%,
-          rgba(153, 69, 255, 0.6) 54%,
-          rgba(153, 69, 255, 0.3) 56%,
-          rgba(153, 69, 255, 0.1) 60%,
+          rgba(30, 164, 149, 0.1) 40%,
+          rgba(30, 164, 149, 0.3) 44%,
+          rgba(30, 164, 149, 0.6) 46%,
+          #1ea495 48%,
+          #1ea495 52%,
+          rgba(30, 164, 149, 0.6) 54%,
+          rgba(30, 164, 149, 0.3) 56%,
+          rgba(30, 164, 149, 0.1) 60%,
           transparent 65%,
           transparent 85%,
           rgba(255, 215, 0, 0.1) 90%,
@@ -140,9 +140,9 @@
           rgba(255, 215, 0, 0.4) 5%,
           transparent 15%,
           transparent 35%,
-          rgba(153, 69, 255, 0.4) 45%,
-          rgba(153, 69, 255, 0.8) 50%,
-          rgba(153, 69, 255, 0.4) 55%,
+          rgba(30, 164, 149, 0.4) 45%,
+          rgba(30, 164, 149, 0.8) 50%,
+          rgba(30, 164, 149, 0.4) 55%,
           transparent 65%,
           transparent 85%,
           rgba(255, 215, 0, 0.4) 95%,
@@ -187,6 +187,178 @@
       /* Smooth transitions for nav */
       nav {
         will-change: transform, opacity;
+      }
+      
+      /* Responsive mascot and icon positioning */
+      .ecosystem-mascot-left,
+      .ecosystem-icon-left {
+        left: 0.5rem; /* 8px - inside on mobile */
+      }
+      .ecosystem-mascot-right,
+      .ecosystem-icon-right {
+        right: 0.5rem; /* 8px - inside on mobile */
+      }
+      
+      @media (min-width: 768px) {
+        .ecosystem-mascot-left,
+        .ecosystem-icon-left {
+          left: clamp(-30px, -8vw, -50px); /* outside on desktop */
+        }
+        .ecosystem-mascot-right,
+        .ecosystem-icon-right {
+          right: clamp(-30px, -8vw, -50px); /* outside on desktop */
+        }
+      }
+      
+      /* Star field background for ecosystem */
+      .ecosystem-starfield {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+      }
+      
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: twinkle 3s infinite;
+      }
+      
+      .star.small {
+        width: 1px;
+        height: 1px;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+      }
+      
+      .star.medium {
+        width: 2px;
+        height: 2px;
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 215, 0, 0.5);
+      }
+      
+      .star.large {
+        width: 3px;
+        height: 3px;
+        box-shadow: 0 0 4px rgba(255, 255, 255, 1), 0 0 8px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 184, 74, 0.4);
+      }
+      
+      @keyframes twinkle {
+        0%, 100% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(var(--drift-x, 20px), var(--drift-y, 30px));
+        }
+      }
+      
+      .star.drifting {
+        animation: twinkle 3s infinite, drift 20s infinite linear;
+      }
+      
+      .star.drifting-slow {
+        animation: twinkle 4s infinite, drift 30s infinite linear;
+      }
+      
+      .star.drifting-fast {
+        animation: twinkle 2.5s infinite, drift 15s infinite linear;
+      }
+      
+      /* Heavy glow effects for cards and icons */
+      .ecosystem-card-glow-gold {
+        box-shadow: 
+          0 0 20px rgba(255, 193, 37, 0.294),
+          0 0 40px rgba(255, 193, 37, 0.196),
+          0 0 60px rgba(255, 193, 37, 0.147),
+          0 0 80px rgba(255, 193, 37, 0.098),
+          inset 0 0 30px rgba(255, 193, 37, 0.049);
+      }
+      
+      .ecosystem-card-glow-teal {
+        box-shadow: 
+          0 0 20px rgba(30, 164, 149, 0.294),
+          0 0 40px rgba(30, 164, 149, 0.196),
+          0 0 60px rgba(30, 164, 149, 0.147),
+          0 0 80px rgba(30, 164, 149, 0.098),
+          inset 0 0 30px rgba(30, 164, 149, 0.049);
+      }
+      
+      .ecosystem-icon-glow-gold {
+        box-shadow: 
+          0 0 10px rgba(255, 193, 37, 0.392),
+          0 0 20px rgba(255, 193, 37, 0.294),
+          0 0 30px rgba(255, 193, 37, 0.196),
+          inset 0 0 10px rgba(255, 193, 37, 0.147);
+      }
+      
+      .ecosystem-icon-glow-teal {
+        box-shadow: 
+          0 0 10px rgba(30, 164, 149, 0.392),
+          0 0 20px rgba(30, 164, 149, 0.294),
+          0 0 30px rgba(30, 164, 149, 0.196),
+          inset 0 0 10px rgba(30, 164, 149, 0.147);
+      }
+      
+      @keyframes pulse-glow-gold {
+        0%, 100% {
+          box-shadow: 
+            0 0 20px rgba(255, 193, 37, 0.294),
+            0 0 40px rgba(255, 193, 37, 0.196),
+            0 0 60px rgba(255, 193, 37, 0.147),
+            0 0 80px rgba(255, 193, 37, 0.098),
+            inset 0 0 30px rgba(255, 193, 37, 0.049);
+        }
+        50% {
+          box-shadow: 
+            0 0 30px rgba(255, 193, 37, 0.392),
+            0 0 60px rgba(255, 193, 37, 0.294),
+            0 0 90px rgba(255, 193, 37, 0.196),
+            0 0 120px rgba(255, 193, 37, 0.147),
+            inset 0 0 40px rgba(255, 193, 37, 0.098);
+        }
+      }
+      
+      @keyframes pulse-glow-teal {
+        0%, 100% {
+          box-shadow: 
+            0 0 20px rgba(30, 164, 149, 0.294),
+            0 0 40px rgba(30, 164, 149, 0.196),
+            0 0 60px rgba(30, 164, 149, 0.147),
+            0 0 80px rgba(30, 164, 149, 0.098),
+            inset 0 0 30px rgba(30, 164, 149, 0.049);
+        }
+        50% {
+          box-shadow: 
+            0 0 30px rgba(30, 164, 149, 0.392),
+            0 0 60px rgba(30, 164, 149, 0.294),
+            0 0 90px rgba(30, 164, 149, 0.196),
+            0 0 120px rgba(30, 164, 149, 0.147),
+            inset 0 0 40px rgba(30, 164, 149, 0.098);
+        }
+      }
+      
+      .ecosystem-card-glow-gold-pulse {
+        animation: pulse-glow-gold 3s ease-in-out infinite;
+      }
+      
+      .ecosystem-card-glow-teal-pulse {
+        animation: pulse-glow-teal 3s ease-in-out infinite;
       }
     </style>
   </head>

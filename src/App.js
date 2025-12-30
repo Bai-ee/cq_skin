@@ -5,10 +5,60 @@ import {
   PieChart, BarChart3, ArrowRight, Check, Hammer,
   Wallet, Gift, Building2, Timer, Gem, Play, 
   Gamepad2, Trophy, Sparkles, CircleDollarSign,
-  Layers, Map, Swords, Crown
+  Layers, Map, Swords, Crown, Trash2, TrendingDown
 } from 'lucide-react';
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import HeroSection from './HeroSection';
+
+// StarField Component for ecosystem background
+const StarField = () => {
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    // Generate stars with random positions and properties
+    const starCount = 150; // Number of stars
+    const newStars = [];
+    
+    for (let i = 0; i < starCount; i++) {
+      const size = Math.random() < 0.7 ? 'small' : Math.random() < 0.9 ? 'medium' : 'large';
+      const driftType = Math.random() < 0.33 ? 'drifting' : Math.random() < 0.66 ? 'drifting-slow' : 'drifting-fast';
+      const delay = Math.random() * 3; // Random animation delay
+      const driftX = (Math.random() - 0.5) * 40; // Random drift direction
+      const driftY = (Math.random() - 0.5) * 40;
+      
+      newStars.push({
+        id: i,
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        size,
+        driftType,
+        delay,
+        driftX,
+        driftY
+      });
+    }
+    
+    setStars(newStars);
+  }, []);
+
+  return (
+    <div className="ecosystem-starfield">
+      {stars.map(star => (
+        <div
+          key={star.id}
+          className={`star ${star.size} ${star.driftType}`}
+          style={{
+            left: star.left,
+            top: star.top,
+            animationDelay: `${star.delay}s`,
+            ['--drift-x']: `${star.driftX}px`,
+            ['--drift-y']: `${star.driftY}px`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 // Data
 const tokenAllocation = [
@@ -392,53 +442,486 @@ function App() {
           <Section id="ecosystem" title="" hideHeader={true} className="!pt-0">
             
             {/* Ecosystem Flow Diagram */}
-            <div className="ecosystem-border-animate rounded-2xl p-8 mb-8" style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(15,15,35,0.95) 50%, rgba(255,184,74,0.1) 100%)' }}>
-              <div className="grid md:grid-cols-3 gap-8 items-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-black flex items-center justify-center mx-auto mb-4 ore-icon-glow">
-                    <img src="/assets_cqTGE/ore.png" alt="ORE" className="w-10 h-10" />
+            <div className="ecosystem-border-animate rounded-2xl p-8 mb-8 relative overflow-hidden md:overflow-visible" style={{ background: '#000000' }}>
+              {/* Star field background */}
+              <StarField />
+              
+              {/* QUEST flows - top of ecosystem container */}
+              <div className="flex items-center justify-center gap-2 mb-4" style={{ zIndex: 1 }}>
+                <ArrowRight className="w-5 h-5 text-quest-primary" />
+                <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>QUEST flows</span>
+                <ArrowRight className="w-5 h-5 text-quest-primary" />
                   </div>
-                  <h4 className="font-bold text-lg mb-2" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", color: '#FFD700' }}>SOV Mining</h4>
-                  <p className="text-gray-400 text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>TGE via ORE Protocol</p>
-                  <div className="mt-3 space-y-1 text-xs text-gray-500" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
+              
+              <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-3 gap-4 items-center" style={{ position: 'relative', zIndex: 1 }}>
+                {/* Column 1 - Two SOV Mining cards - higher z-index */}
+                <div className="flex flex-col gap-4 justify-center order-1 md:order-1" style={{ zIndex: 10, position: 'relative', height: '100%', overflow: 'visible' }}>
+                  {/* First SOV Mining Card */}
+                  <div className="relative text-center" style={{ width: '100%', height: '45%', margin: '0 auto' }}>
+                    {/* Card with Figma styling - scales with parent */}
+                    <div 
+                      className="relative border-2 border-[#FFC125] mx-auto ecosystem-card-glow-gold ecosystem-card-glow-gold-pulse"
+                      style={{ 
+                        borderRadius: 'clamp(12px, 2vw, 20px)',
+                        background: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                        width: '100%',
+                        height: '100%',
+                        padding: 'clamp(0.75rem, 2vw, 1.5rem)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {/* Miner Mascot - positioned on left border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-mascot-left" 
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%) rotate(180deg) scaleY(-1)',
+                          width: 'clamp(40px, 12vw, 100px)',
+                          height: 'clamp(48px, 14.4vw, 120px)'
+                        }}
+                      >
+                        <img 
+                          src="/assets_cqTGE/miner_mascot.png" 
+                          alt="Miner Mascot" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      
+                      {/* ORE Icon - positioned on right border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-icon-right"
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(32px, 10vw, 80px)',
+                          height: 'clamp(32px, 10vw, 80px)'
+                        }}
+                      >
+                        <div 
+                          className="rounded-2xl bg-black flex items-center justify-center ecosystem-icon-glow-gold mx-auto" 
+                          style={{ 
+                            border: '2px solid #FFC125',
+                            width: 'clamp(32px, 10vw, 64px)',
+                            height: 'clamp(32px, 10vw, 64px)',
+                            background: 'rgba(0, 0, 0, 0.8)',
+                            backdropFilter: 'blur(5px)',
+                            WebkitBackdropFilter: 'blur(5px)'
+                          }}
+                        >
+                          <img 
+                            src="/assets_cqTGE/ore_icon.svg" 
+                            alt="ORE" 
+                            style={{ 
+                              width: 'clamp(16px, 5vw, 32px)',
+                              height: 'clamp(16px, 5vw, 32px)'
+                            }}
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Text content - scales responsively maintaining margins */}
+                      <div style={{ 
+                        marginLeft: 'clamp(0px, 8vw, 30px)',
+                        marginRight: 'clamp(0px, 8vw, 30px)'
+                      }}>
+                        <h4 
+                          className="font-bold mb-2" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", 
+                            color: '#FFC125',
+                            fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)'
+                          }}
+                        >
+                          SOV MINING
+                        </h4>
+                        <p 
+                          className="text-gray-400" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
+                          }}
+                        >
+                          TGE via ORE Protocol
+                        </p>
+                        <div 
+                          className="mt-3 space-y-1 text-gray-500" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)'
+                          }}
+                        >
                     <div>• Fair token distribution</div>
                     <div>• Earn SOL + QUEST</div>
-                    <div>• 7% buyback burns</div>
+                        </div>
+                      </div>
                   </div>
                 </div>
                 
-                <div className="flex flex-col items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <ArrowRight className="w-5 h-5 text-quest-primary" />
-                    <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>QUEST flows</span>
-                    <ArrowRight className="w-5 h-5 text-quest-primary" />
+                  {/* Second SOV Mining Card */}
+                  <div className="relative text-center" style={{ width: '100%', height: '45%', margin: '0 auto' }}>
+                    {/* Card with Figma styling - scales with parent */}
+                    <div 
+                      className="relative border-2 border-[#FFC125] mx-auto ecosystem-card-glow-gold ecosystem-card-glow-gold-pulse"
+                      style={{ 
+                        borderRadius: 'clamp(12px, 2vw, 20px)',
+                        background: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                        width: '100%',
+                        height: '100%',
+                        padding: 'clamp(0.75rem, 2vw, 1.5rem)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {/* Burner Mascot - positioned on left border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-mascot-left" 
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%) rotate(180deg) scaleY(-1)',
+                          width: 'clamp(40px, 12vw, 100px)',
+                          height: 'clamp(48px, 14.4vw, 120px)'
+                        }}
+                      >
+                        <img 
+                          src="/assets_cqTGE/Burner.png" 
+                          alt="Burner Mascot" 
+                          className="w-full h-full object-contain"
+                        />
                   </div>
-                  <div className="flex items-center justify-center">
-                    <img src="/assets_cqTGE/CoinStacked.png" alt="QUEST Token" className="w-[11.2rem] h-[11.2rem] object-contain" />
+                      
+                      {/* Flame Icon - positioned on right border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-icon-right"
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(32px, 10vw, 80px)',
+                          height: 'clamp(32px, 10vw, 80px)'
+                        }}
+                      >
+                        <div 
+                          className="rounded-2xl bg-black flex items-center justify-center ecosystem-icon-glow-gold mx-auto" 
+                          style={{ 
+                            border: '2px solid #FFC125',
+                            width: 'clamp(32px, 10vw, 64px)',
+                            height: 'clamp(32px, 10vw, 64px)',
+                            background: 'rgba(0, 0, 0, 0.8)',
+                            backdropFilter: 'blur(5px)',
+                            WebkitBackdropFilter: 'blur(5px)'
+                          }}
+                        >
+                          <Flame 
+                            className="text-[#FFC125]"
+                            style={{ 
+                              width: 'clamp(16px, 5vw, 32px)',
+                              height: 'clamp(16px, 5vw, 32px)'
+                            }}
+                          />
                   </div>
-                  <div className="text-center">
+                      </div>
+                      
+                      {/* Text content - scales responsively maintaining margins */}
+                      <div style={{ 
+                        marginLeft: 'clamp(0px, 8vw, 20px)',
+                        marginRight: 'clamp(0px, 8vw, 20px)'
+                      }}>
+                        <h4 
+                          className="font-bold mb-2" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", 
+                            color: '#FFC125',
+                            fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)'
+                          }}
+                        >
+                          BURN
+                        </h4>
+                        <p 
+                          className="text-gray-400" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
+                          }}
+                        >
+                          TGE via ORE Protocol
+                        </p>
+                        <div 
+                          className="mt-3 space-y-1 text-gray-500" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)'
+                          }}
+                        >
+                          <div>• 7% buyback burns</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Column 2 - Token only - token overlaps significantly */}
+                <div 
+                  className="flex flex-col items-center justify-center gap-0 order-2 md:order-2 w-full md:w-[140%] md:-mx-[20%]" 
+                  style={{ 
+                    zIndex: 30, 
+                    position: 'relative'
+                  }}
+                >
+                  <div className="flex items-center justify-center" style={{ position: 'relative', width: '100%' }}>
+                    <img 
+                      src="/assets_cqTGE/quest_token_flat_ecosystem.png" 
+                      alt="QUEST Token" 
+                      className="object-contain mx-auto"
+                      style={{ 
+                        width: '100%',
+                        height: 'clamp(8rem, 20vw, 20rem)',
+                        maxWidth: 'none',
+                        filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.5))',
+                        position: 'relative',
+                        pointerEvents: 'none',
+                        display: 'block'
+                      }}
+                    />
+                  </div>
+                  <div className="text-center w-full" style={{ zIndex: 1 }}>
                     <div className="text-white font-bold" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>$QUEST</div>
                     <div className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>Utility Token</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
-                    <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>20% to treasury</span>
-                    <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
+                </div>
+                
+                {/* Column 3 - 4X Game and SOV Mining card - higher z-index */}
+                <div className="flex flex-col gap-4 justify-center order-3 md:order-3" style={{ zIndex: 10, position: 'relative', height: '100%', overflow: 'visible' }}>
+                  {/* 4X Game Card */}
+                  <div className="relative text-center" style={{ width: '100%', height: '45%', margin: '0 auto' }}>
+                    {/* Card with Figma styling - scales with parent */}
+                    <div 
+                      className="relative border-2 border-[#1ea495] mx-auto ecosystem-card-glow-teal ecosystem-card-glow-teal-pulse"
+                      style={{ 
+                        borderRadius: 'clamp(12px, 2vw, 20px)',
+                        background: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                        width: '100%',
+                        height: '100%',
+                        padding: 'clamp(0.75rem, 2vw, 1.5rem)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {/* Gamepad Icon - positioned on left border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-icon-left"
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(32px, 10vw, 80px)',
+                          height: 'clamp(32px, 10vw, 80px)'
+                        }}
+                      >
+                        <div 
+                          className="rounded-2xl bg-black flex items-center justify-center ecosystem-icon-glow-teal mx-auto" 
+                          style={{ 
+                            border: '2px solid #1ea495',
+                            width: 'clamp(32px, 10vw, 64px)',
+                            height: 'clamp(32px, 10vw, 64px)',
+                            background: 'rgba(0, 0, 0, 0.8)',
+                            backdropFilter: 'blur(5px)',
+                            WebkitBackdropFilter: 'blur(5px)'
+                          }}
+                        >
+                          <Gamepad2 
+                            className="text-[#1ea495]" 
+                            style={{ 
+                              width: 'clamp(16px, 5vw, 32px)',
+                              height: 'clamp(16px, 5vw, 32px)'
+                            }}
+                          />
                   </div>
                 </div>
                 
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-quest-secondary/20 flex items-center justify-center mx-auto mb-4">
-                    <Gamepad2 className="w-10 h-10 text-quest-secondary" />
+                      {/* 4X Gaming Mascot - positioned on right border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-mascot-right" 
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(40px, 12vw, 100px)',
+                          height: 'clamp(48px, 14.4vw, 120px)'
+                        }}
+                      >
+                        <img 
+                          src="/assets_cqTGE/4x_gaming_mascot.png" 
+                          alt="4X Gaming Mascot" 
+                          className="w-full h-full object-contain"
+                        />
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-2" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>4X Game</h4>
-                  <p className="text-gray-400 text-sm" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>Play & Earn</p>
-                  <div className="mt-3 space-y-1 text-xs text-gray-500" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
+                      
+                      {/* Text content - scales responsively maintaining margins */}
+                      <div style={{ 
+                        marginLeft: 'clamp(0px, 8vw, 20px)',
+                        marginRight: 'clamp(0px, 8vw, 20px)'
+                      }}>
+                        <h4 
+                          className="font-bold mb-2" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", 
+                            color: '#1ea495',
+                            fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)'
+                          }}
+                        >
+                          4X Game
+                        </h4>
+                        <p 
+                          className="text-gray-400" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
+                          }}
+                        >
+                          Play & Earn
+                        </p>
+                        <div 
+                          className="mt-3 space-y-1 text-gray-500" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)'
+                          }}
+                        >
                     <div>• Spend QUEST in-game</div>
                     <div>• Earn through gameplay</div>
                     <div>• 20% feeds SOV treasury</div>
                   </div>
                 </div>
+                    </div>
+                  </div>
+                  
+                  {/* Third SOV Mining Card */}
+                  <div className="relative text-center" style={{ width: '100%', height: '45%', margin: '0 auto' }}>
+                    {/* Card with Figma styling - scales with parent */}
+                    <div 
+                      className="relative border-2 border-[#1ea495] mx-auto ecosystem-card-glow-teal ecosystem-card-glow-teal-pulse"
+                      style={{ 
+                        borderRadius: 'clamp(12px, 2vw, 20px)',
+                        background: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                        width: '100%',
+                        height: '100%',
+                        padding: 'clamp(0.75rem, 2vw, 1.5rem)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {/* Coins/Sink Icon - positioned on left border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-icon-left"
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(32px, 10vw, 80px)',
+                          height: 'clamp(32px, 10vw, 80px)'
+                        }}
+                      >
+                        <div 
+                          className="rounded-2xl bg-black flex items-center justify-center ecosystem-icon-glow-teal mx-auto" 
+                          style={{ 
+                            border: '2px solid #1ea495',
+                            width: 'clamp(32px, 10vw, 64px)',
+                            height: 'clamp(32px, 10vw, 64px)',
+                            background: 'rgba(0, 0, 0, 0.8)',
+                            backdropFilter: 'blur(5px)',
+                            WebkitBackdropFilter: 'blur(5px)'
+                          }}
+                        >
+                          <Coins 
+                            className="text-[#1ea495]"
+                            style={{ 
+                              width: 'clamp(16px, 5vw, 32px)',
+                              height: 'clamp(16px, 5vw, 32px)'
+                            }}
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Banker Mascot - positioned on right border, scales with screen, visible on mobile */}
+                      <div 
+                        className="absolute z-10 ecosystem-mascot-right" 
+                        style={{ 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(40px, 12vw, 100px)',
+                          height: 'clamp(48px, 14.4vw, 120px)'
+                        }}
+                      >
+                        <img 
+                          src="/assets_cqTGE/Banker.png" 
+                          alt="Banker Mascot" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      
+                      {/* Text content - scales responsively maintaining margins */}
+                      <div style={{ 
+                        marginLeft: 'clamp(0px, 8vw, 20px)',
+                        marginRight: 'clamp(0px, 8vw, 20px)'
+                      }}>
+                        <h4 
+                          className="font-bold mb-2" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive", 
+                            color: '#1ea495',
+                            fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)'
+                          }}
+                        >
+                          SINKS
+                        </h4>
+                        <p 
+                          className="text-gray-400" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
+                          }}
+                        >
+                          Lorem ipsum dolor sit amet
+                        </p>
+                        <div 
+                          className="mt-3 space-y-1 text-gray-500" 
+                          style={{ 
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
+                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)'
+                          }}
+                        >
+                          <div>• Consectetur adipiscing elit</div>
+                          <div>• Sed do eiusmod tempor</div>
+                          <div>• Incididunt ut labore et dolore</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* 20% to treasury - bottom of ecosystem container */}
+              <div className="flex items-center justify-center gap-2 mt-4" style={{ zIndex: 1 }}>
+                <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
+                <span className="text-gray-500 text-xs" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>20% to treasury</span>
+                <ArrowRight className="w-5 h-5 text-quest-secondary rotate-180" />
               </div>
             </div>
 
